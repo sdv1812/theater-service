@@ -4,14 +4,16 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
+import jakarta.persistence.ManyToOne
 
 @Entity
-data class Performance(
+data class Booking(
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long,
-    val title: String,
+    val customerName: String
 ) {
-    @OneToMany(mappedBy = "performance")
-    lateinit var bookings: List<Booking>
+    @ManyToOne
+    lateinit var seat: Seat
+    @ManyToOne
+    lateinit var performance: Performance
 }
