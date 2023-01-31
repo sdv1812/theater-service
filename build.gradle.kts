@@ -25,6 +25,9 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.10")
+	implementation("aws.sdk.kotlin:sqs:0.19.4-beta")
+	implementation("com.google.code.gson:gson:2.8.5")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
