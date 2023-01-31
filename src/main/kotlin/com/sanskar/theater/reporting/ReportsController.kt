@@ -3,24 +3,14 @@ package com.sanskar.theater.reporting
 import aws.sdk.kotlin.services.sqs.SqsClient
 import aws.sdk.kotlin.services.sqs.model.SendMessageRequest
 import kotlinx.coroutines.runBlocking
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.servlet.ModelAndView
-import kotlin.reflect.full.declaredMemberFunctions
 
 @Controller
 @RequestMapping("/reports")
 class ReportsController {
-
-    @Autowired
-    lateinit var reportingService: ReportsService
-    private fun getListOfReports() = reportingService::class.declaredMemberFunctions.map { it.name }
-
-    @RequestMapping("")
-    fun main() = ModelAndView("reports", mapOf("reports" to getListOfReports()))
 
     @RequestMapping("/generateReport/{report}")
     fun getReport(@PathVariable("report") report: String): ResponseEntity<String> {
