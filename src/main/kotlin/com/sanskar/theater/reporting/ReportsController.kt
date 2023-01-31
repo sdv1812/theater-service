@@ -2,6 +2,7 @@ package com.sanskar.theater.reporting
 
 import aws.sdk.kotlin.services.sqs.SqsClient
 import aws.sdk.kotlin.services.sqs.model.SendMessageRequest
+import com.sanskar.theater.config.AWSCloudProperties
 import kotlinx.coroutines.runBlocking
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -10,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
 @RequestMapping("/reports")
-class ReportsController {
+class ReportsController(val awsCloudProperties: AWSCloudProperties) {
 
     @RequestMapping("/generateReport/{report}")
     fun getReport(@PathVariable("report") report: String): ResponseEntity<String> {
         val (queueUrl, reportType) = when (report) {
-            "all_bookings" -> listOf("theater-report-all-bookings-dev", "all_bookings")
-            "premium_bookings" -> listOf("theater-report-premium-bookings-dev", "premium_bookings")
+            "all_bookings" -> listOf(awsCloudProperties.reportSQSUrl.all, "all_bookings")
+            "premium_bookings" -> listOf(awsCloudProperties.reportSQSUrl.premium, "premium_bookings")
             else -> listOf("", "")
         }
 
@@ -35,7 +36,7 @@ class ReportsController {
             delaySeconds = 10
         }
 
-        SqsClient { region = "ap-southeast-2" }.use { sqsClient ->
+        SqsClient { region = awsCloudProperties.region }.use { sqsClient ->
             sqsClient.sendMessage(sendRequest)
             println("A single message was successfully sent.")
         }

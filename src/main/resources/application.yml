@@ -8,3 +8,50 @@ spring:
       hibernate:
         hbm2ddl:
           auto: update
+cloud.aws:
+  region: ap-southeast-2
+  reportSQSUrl:
+    premium: theater-report-premium-bookings-dev
+    all: theater-report-all-bookings-dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:h2:file:~/theater;AUTO_SERVER=TRUE
+    driverClassName: org.h2.Driver
+    username: sa
+cloud.aws:
+  reportSQSUrl:
+    premium: theater-report-premium-bookings-dev
+    all: theater-report-all-bookings-dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: staging
+  datasource:
+    url: jdbc:h2:file:~/theater;AUTO_SERVER=TRUE
+    driverClassName: org.h2.Driver
+    username: sa
+cloud.aws:
+  reportSQSUrl:
+    premium: theater-report-premium-bookings-stg
+    all: theater-report-all-bookings-stg
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:h2:file:~/theater;AUTO_SERVER=TRUE
+    driverClassName: org.h2.Driver
+    username: sa
+cloud.aws:
+  reportSQSUrl:
+    premium: theater-report-premium-bookings-prod
+    all: theater-report-all-bookings-prod
